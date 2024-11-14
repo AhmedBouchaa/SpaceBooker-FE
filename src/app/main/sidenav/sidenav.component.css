@@ -1,0 +1,7 @@
+.nav-link.active {
+  /* color: #f6a700; */
+  color: rgb(254 240 138);
+}
+.nav-link {
+  margin-left:10%;
+}
