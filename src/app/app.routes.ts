@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { ReservationsComponent } from './main/reservations/reservations.component';
 import { MakeReservationComponent } from './main/reservations/make-reservation/make-reservation.component';
 import { MyReservationsComponent } from './main/reservations/my-reservations/my-reservations.component';
+import { ProfileComponent } from './main/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -14,6 +15,10 @@ export const routes: Routes = [
         path: 'Reservations',
         component: ReservationsComponent,
       },
+      {
+        path: 'Profile',
+        component: ProfileComponent,
+      },
     ],
   },
   {
@@ -23,6 +28,10 @@ export const routes: Routes = [
       { path: 'make-reservation', component: MakeReservationComponent },
       { path: 'my-reservations', component: MyReservationsComponent },
     ],
+  },
+  {
+    path: 'Profile',
+    component: ProfileComponent,
   },
 ];
 @NgModule
