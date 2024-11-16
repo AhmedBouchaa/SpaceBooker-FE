@@ -18,6 +18,6 @@ export class HomeComponent {
   }
 
   navigateToDashboard() {
-    this.router.navigate(['/Main']); // Redirige vers le composant Main
+    this.router.navigate(['/Main/Reservations/make-reservation']); // Redirige vers le composant Main
   }
 }

@@ -24,7 +24,6 @@ section {
 section .section-title {
     text-align: center;
     color: black;
-    margin-bottom: 50px;
     text-transform: uppercase;
 }
 
@@ -40,7 +39,6 @@ section .section-title {
     -o-transform: rotateY(0deg);
     -ms-transform: rotateY(0deg);
     transform: rotateY(0deg);
-    border-radius: .25rem;
 }
 
 .image-flip:hover .frontside,
@@ -69,7 +67,6 @@ section .section-title {
     -webkit-transform: rotateY(0deg);
     -ms-transform: rotateY(0deg);
     z-index: 2;
-    margin-bottom: 30px;
 }
 
 .backside {
