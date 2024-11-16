@@ -1,7 +1,9 @@
+
+
 <div class="flex justify-center item-center">
   <!-- Background -->
-  <div class="background bg-[url('iset.jpg')]" ></div>
-  <img src="iset.jpg" alt="">
+  <div class="background"></div>
+
   <!-- Overlay -->
   <div class="overlay"></div>
 
@@ -30,13 +32,16 @@
     </div>
   </div>
 
-  <!-- Log In Button -->
-  <button class="btn-log-in">Log In</button>
-
-  <!-- book Button -->
-
   <button class="btn-animated">Book Now</button>
-
-  <!-- Fleche -->
+  <button class="btn-login" style=" top: 5%;right: 5%;" *ngIf="!isLoggedIn()">Login</button>
+  <button class="btn-login" style=" top: 5%;right: 12%;" *ngIf="!isLoggedIn()">Sign In</button>
+  <button class="btn-login" style=" top: 5%;right: 5%;" *ngIf="isLoggedIn()" (click)="navigateToDashboard()">
+    Dashboard
+  </button>
   <div class="fleche"></div>
+
+</div>
+
+<div class="header">
+
 </div>
