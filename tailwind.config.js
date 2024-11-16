@@ -17,6 +17,10 @@ module.exports = {
     "./src/app/main/reservations/make-reservation/make-reservation.component.ts",
     "./src/app/main/reservations/my-reservations/my-reservations.component.html",
     "./src/app/main/reservations/my-reservations/my-reservations.component.ts",
+    "./src/app/main/profile/profile.component.html",
+    "./src/app/main/profile/profile.component.ts",
+    "./src/app/main/event/event.component.html",
+    "./src/app/main/event/event.component.ts",
   ],
   theme: {
     extend: {},

@@ -1,118 +1,118 @@
-
-  <div class="flex h-screen px-20 py-10 gap-8 pl-8">
-    <div
-      class=" p-5 relative w-[50%] h-[70%] flex items-center justify-center"
-    >
+<div class="h-[100%] flex pl-[8%] pt-10 gap-8">
+  <div class="w-[50%] h-[100%]   rounded-xl border-2 border-gray-200 p-5">
+    <div class="relative  h-full w-full flex items-center justify-center">
       <!-- Top Left Square -->
       <div
-        class="carre z-50 absolute top-0 left-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-800 rounded-2xl flex justify-center items-center"
+        class="carre z-50 absolute top-0 left-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Mecanique
       </div>
 
       <!-- Top Horizontal Rectangle -->
       <div
-        class="carre absolute top-10 left-[35%] w-[30%] h-[15%] bg-gray-200 bg-opacity-50 border-2 border-gray-800"
+        class="carre absolute top-10 left-[35%] w-[30%] h-[15%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
       ></div>
 
       <!-- Top Right Square -->
       <div
-        class="carre z-50 absolute top-0 right-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-800 rounded-2xl flex justify-center items-center"
+        class="carre z-50 absolute top-0 right-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Informatique
       </div>
 
       <!-- Left Vertical Rectangle -->
       <div
-        class="carre absolute left-10 top-[35%] w-[15%] h-[30%] bg-gray-200 bg-opacity-50 border-2 border-gray-800"
+        class="carre absolute left-10 top-[35%] w-[15%] h-[30%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
       ></div>
 
       <!-- Right Vertical Rectangle -->
       <div
-        class="carre absolute right-10 top-[35%] w-[15%] h-[30%] bg-gray-200 bg-opacity-50 border-2 border-gray-800"
+        class="carre absolute right-10 top-[35%] w-[15%] h-[30%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
       ></div>
 
       <!-- Bottom Left Square -->
       <div
-        class="carre z-50 absolute bottom-0 left-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-800 rounded-2xl flex justify-center items-center"
+        class="carre z-50 absolute bottom-0 left-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Gestion
       </div>
 
       <!-- Bottom Horizontal Rectangle -->
       <div
-        class="carre absolute bottom-10 left-[35%] w-[30%] h-[15%] bg-gray-200 bg-opacity-50 border-2 border-gray-800"
+        class="carre absolute bottom-10 left-[35%] w-[30%] h-[15%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
       ></div>
 
       <!-- Bottom Right Square -->
       <div
-        class="carre z-50 absolute bottom-0 right-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-800 rounded-2xl flex justify-center items-center"
+        class="carre z-50 absolute bottom-0 right-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Electrique
       </div>
     </div>
-
-    <div
-      class="h-[80%] bg-yellow-200 flex flex-col justify-center items-center p-2 "
-    >
-      <div class="w-[100%] mb-5">
-        <span class="w-60 p-2 text-gray-800 mr-4 text-xl"
-          >Reservation Date:
-        </span>
+  </div>
+  <div class=" w-[50%] ">
+    <div class="p-6 mb-5 h-[48%] w-[80%] rounded-xl border-2 border-gray-200">
+      <span class="w-60 p-2 text-gray-800 mr-4 text-xl"
+        >Reservation Date:
+      </span>
+      <input
+        type="date"
+        name=""
+        id="dateInput"
+        class="mt-4 mb-2 w-[90%] ml-5 rounded-md border-2 borer-gray-800 px-6 text-gray-800"
+      />
+      <div class="my-2 w-[90%] ml-5">
+        <span class="mr-2">From</span>
         <input
-          type="date"
+          type="time"
           name=""
-          id="dateInput"
-          class="mt-4 mb-2 w-[100%] rounded-md border-2 borer-gray-800 px-6 text-gray-800"
+          id="timeInput"
+          class="rounded-md border-2 borer-gray-800 w-[39.1%] px-6 text-gray-800"
         />
-        <div class="my-2 w-[100%]">
-          <span class="mr-2">From</span>
-          <input
-            type="time"
-            name=""
-            id="timeInput"
-            class="rounded-md border-2 borer-gray-800 w-[36%] px-6 text-gray-800"
-          />
-          <span class="mx-2">To</span>
-          <input
-            type="time"
-            name=""
-            id="timeInput"
-            class="rounded-md border-2 borer-gray-800 w-[36%] px-6 text-gray-800"
-          />
-        </div>
-        <div class="flex justify-end items-center gap-10 mt-4">
-          <button class="border-2 border-gray-800 py-1 px-3 rounded-md text-gray-800 hover:bg-gray-800 hover:text-white">Search</button>
-        </div>
+        <span class="mx-2">To</span>
+        <input
+          type="time"
+          name=""
+          id="timeInput"
+          class="rounded-md border-2 borer-gray-800 w-[39.1%] px-6 text-gray-800"
+        />
       </div>
-      <div
-        class="pl-5 flex  justify-center items-center h-[80%] border-l-2 border-gray-900 gap-[3%] bg-red-200"
-      >
-        <div class="w-[100%] bg-green-200">
-          <div class="h-[20%] w-full flex items-center p-3 gap-4">
-            <div class="rounded-md w-6 h-6 bg-red-200"></div>
-            <span>100% Full</span>
-          </div>
-          <div class="h-[20%] w-full flex items-center p-3 gap-4">
-            <div class="rounded-md w-6 h-6 bg-orange-200"></div>
-            <span>50% Full</span>
-          </div>
-        </div>
-        <div>
-          <div class="h-[20%] w-full flex items-center p-3 gap-4">
-            <div class="rounded-md w-6 h-6 bg-yellow-200"></div>
-            <span>25% Full</span>
-          </div>
-          <div class="h-[20%] w-full flex items-center p-3 gap-4">
-            <div class="rounded-md w-6 h-6 bg-green-200"></div>
-            <span>Empty</span>
-          </div>
-        </div>
+      <div class="flex justify-end items-center gap-10 mt-4 px-6">
+        <button
+          class="border-2 border-gray-200 py-1 px-3 rounded-md text-gray-800 hover:bg-gray-800 hover:text-white"
+        >
+          Search
+        </button>
       </div>
     </div>
+    <div class="w-[80%] h-[48%] rounded-xl border-2 border-gray-200"></div>
   </div>
+</div>
+<div class="py-4 gap-8 px-[8%] w-[100%]">
+  <div
+    class="bg-white pl-[10%] flex flex-row justify-center items-center w-[100%] h-[10%] rounded-xl border-2 border-gray-200 p-5"
+  >
+    <div class="h-[20%] w-full flex items-center p-3 gap-4">
+      <div class="rounded-md w-6 h-6 bg-red-200"></div>
+      <span>100% Full</span>
+    </div>
+    <div class="h-[20%] w-full flex items-center p-3 gap-4">
+      <div class="rounded-md w-6 h-6 bg-orange-200"></div>
+      <span>50% Full</span>
+    </div>
 
-  <!-- <img src="herbe.png" class="z-0 absolute top-[200px] left-[400px] w-6 h-6 ">
+    <div class="h-[20%] w-full flex items-center p-3 gap-4">
+      <div class="rounded-md w-6 h-6 bg-yellow-200"></div>
+      <span>25% Full</span>
+    </div>
+    <div class="h-[20%] w-full flex items-center p-3 gap-4">
+      <div class="rounded-md w-6 h-6 bg-green-200"></div>
+      <span>Empty</span>
+    </div>
+  </div>
+</div>
+
+<!-- <img src="herbe.png" class="z-0 absolute top-[200px] left-[400px] w-6 h-6 ">
 <img src="herbe.png" class="z-0 absolute top-[500px] left-[900px] w-6 h-6 ">
 <img src="herbe.png" class="z-0 absolute top-[360px] left-[50px] w-6 h-6 ">
 <img src="herbe.png" class="z-0 absolute top-[400px] left-[1200px] w-6 h-6 ">

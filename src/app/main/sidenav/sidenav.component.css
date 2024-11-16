@@ -1,7 +1,13 @@
 .nav-link.active {
   /* color: #f6a700; */
-  color: rgb(254 240 138);
+  color:white;
 }
 .nav-link {
   margin-left:10%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scaling and shadow */
+}
+.nav-link.active{
+  /* color: #f6a700; */
+  color: white;
+  transform: scale(1.1);
 }

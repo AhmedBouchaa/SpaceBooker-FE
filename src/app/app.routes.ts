@@ -5,6 +5,7 @@ import { ReservationsComponent } from './main/reservations/reservations.componen
 import { MakeReservationComponent } from './main/reservations/make-reservation/make-reservation.component';
 import { MyReservationsComponent } from './main/reservations/my-reservations/my-reservations.component';
 import { ProfileComponent } from './main/profile/profile.component';
+import { EventComponent } from './main/event/event.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,10 @@ export const routes: Routes = [
   {
     path: 'Profile',
     component: ProfileComponent,
+  },
+  {
+    path: 'Event',
+    component: EventComponent,
   },
 ];
 @NgModule
