@@ -1,7 +1,7 @@
 <div class="bg-zinc-950 h-full w-52 absolute left-0 bottom-0 z-0"></div>
 <div class="h-full w-full flex pl-[8%] pt-10 gap-8">
-  <div class="w-[50%] h-[100%]   rounded-xl border-2 border-gray-200 p-5">
-    <div class="relative  h-full w-full flex items-center justify-center">
+  <div class="w-[50%] h-[100%] rounded-xl border-2 border-gray-200 p-5">
+    <div class="relative h-full w-full flex items-center justify-center">
       <!-- Top Left Square -->
       <div
         class="cursor-pointer carre z-50 absolute top-0 left-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
@@ -51,7 +51,7 @@
       </div>
     </div>
   </div>
-  <div class=" w-[50%] ">
+  <div class="w-[50%]">
     <div class="p-6 mb-5 h-[48%] w-[80%] rounded-xl border-2 border-gray-200">
       <span class="w-60 p-2 text-gray-800 mr-4 text-xl"
         >Reservation Date:
@@ -60,6 +60,7 @@
         type="date"
         name=""
         id="dateInput"
+        [(ngModel)]="currentDate"
         class="mt-4 mb-2 w-[90%] ml-5 rounded-md border-2 borer-gray-800 px-6 text-gray-800"
       />
       <div class="my-2 w-[90%] ml-5">
@@ -67,6 +68,7 @@
         <input
           type="time"
           name=""
+          [(ngModel)]="fromTime"
           id="timeInput"
           class="rounded-md border-2 borer-gray-800 w-[39.1%] px-6 text-gray-800"
         />
@@ -74,6 +76,7 @@
         <input
           type="time"
           name=""
+          [(ngModel)]="toTime"
           id="timeInput"
           class="rounded-md border-2 borer-gray-800 w-[39.1%] px-6 text-gray-800"
         />
@@ -118,3 +121,16 @@
 <img src="herbe.png" class="z-0 absolute top-[360px] left-[50px] w-6 h-6 ">
 <img src="herbe.png" class="z-0 absolute top-[400px] left-[1200px] w-6 h-6 ">
 <img src="herbe.png" class="z-0 absolute top-[540px] left-[300px] w-6 h-6 "> -->
+
+<div *ngIf="reservations.length > 0">
+  <h3>Reservations:</h3>
+  <ul>
+    <li *ngFor="let reservation of reservations">
+      {{ reservation | json }}
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="reservations.length === 0">
+  <p>No reservations found for the selected date and time range.</p>
+</div>
