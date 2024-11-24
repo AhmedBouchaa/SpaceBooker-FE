@@ -3,7 +3,7 @@ import { Bloc } from './Bloc';
 import { Admin } from './Admin';
 
 export interface Room {
-  id: number; // Room ID
+  id?: number; // Room ID
   name: string; // Name of the room
   num: number; // Room number
   description: string; // Description of the room
