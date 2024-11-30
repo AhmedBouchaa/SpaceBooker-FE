@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Room } from '../interfaces/Room';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Bloc } from '../interfaces/Bloc';
 
 @Injectable({
@@ -13,16 +13,26 @@ export class RoomService {
   constructor(private http: HttpClient) {}
   getRooms(): Observable<Room[]> {
     const url = `${this.apiUrl}rooms`;
+    return this.http.get<Room[]>(url).pipe(
+      catchError((error) => {
+        console.error('Error fetching rooms:', error);
+        return throwError(() => new Error('Failed to fetch rooms.'));
+      })
+    );
+  }
+
+  AddRoom(room: Room, admin_id: number, bloc_id: number): Observable<Room> {
+    // Create HttpParams to append bloc_id as a query parameter
+    const params = new HttpParams()
+      .set('bloc_id', bloc_id.toString())
+      .set('admin_id', admin_id.toString());
+
+    // Use PUT method to update the room, passing the room object and bloc_id as query parameter
+    return this.http.post<Room>(`${this.apiUrl}rooms`, room, { params });
+  }
+
+  getRoomsByBlocId(bloc_id: number): Observable<Room[]> {
+    const url = `${this.apiUrl}rooms/bloc/${bloc_id}`;
     return this.http.get<Room[]>(url);
-  }
-
-  putRoom(room: Room): Observable<Room> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    return this.http.post<Room>(`${this.apiUrl}room`, room, { headers });
-  }
-  getRoomsByBlocId(bloc: Bloc): Observable<Room[]> {
-    const url = `${this.apiUrl}rooms/bloc/${bloc.id}`;
-        return this.http.get<Room[]>(url);
   }
 }

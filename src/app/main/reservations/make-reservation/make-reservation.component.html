@@ -11,45 +11,52 @@
       </button>
 
       <!-- Top Horizontal Rectangle -->
-      <div
+      <button
+        (click)="openModal(5)"
         class="cursor-pointer carre absolute top-10 left-[35%] w-[30%] h-[15%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
-      ></div>
+      ></button>
 
       <!-- Top Right Square -->
-      <div
+      <button
+        (click)="openModal(1)"
         class="cursor-pointer carre z-50 absolute top-0 right-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Informatique
-      </div>
+      </button>
 
       <!-- Left Vertical Rectangle -->
-      <div
+      <button
+        (click)="openModal(6)"
         class="cursor-pointer carre absolute left-10 top-[35%] w-[15%] h-[30%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
-      ></div>
+      ></button>
 
       <!-- Right Vertical Rectangle -->
-      <div
+      <button
+        (click)="openModal(7)"
         class="cursor-pointer carre absolute right-10 top-[35%] w-[15%] h-[30%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
-      ></div>
+      ></button>
 
       <!-- Bottom Left Square -->
-      <div
+      <button
+        (click)="openModal(3)"
         class="cursor-pointer carre z-50 absolute bottom-0 left-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Gestion
-      </div>
+      </button>
 
       <!-- Bottom Horizontal Rectangle -->
-      <div
+      <button
+        (click)="openModal(8)"
         class="cursor-pointer carre absolute bottom-10 left-[35%] w-[30%] h-[15%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
-      ></div>
+      ></button>
 
       <!-- Bottom Right Square -->
-      <div
+      <button
+        (click)="openModal(4)"
         class="cursor-pointer carre z-50 absolute bottom-0 right-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Electrique
-      </div>
+      </button>
     </div>
   </div>
   <div class="w-[50%]">
@@ -61,7 +68,7 @@
         type="date"
         name=""
         id="dateInput"
-        [(ngModel)]="currentDate"
+        [(ngModel)]="theDate"
         class="mt-4 mb-2 w-[90%] ml-5 rounded-md border-2 borer-gray-800 px-6 text-gray-800"
       />
       <div class="my-2 w-[90%] ml-5">
@@ -123,20 +130,7 @@
 <img src="herbe.png" class="z-0 absolute top-[400px] left-[1200px] w-6 h-6 ">
 <img src="herbe.png" class="z-0 absolute top-[540px] left-[300px] w-6 h-6 "> -->
 
-<div *ngIf="AllRooms.length > 0">
-  <h3>Reservations:</h3>
-  <ul>
-    <li *ngFor="let room of AllRooms">
-      {{ room | json }}
-    </li>
-  </ul>
-</div>
-
-<div *ngIf="AllRooms.length === 0">
-  <p>No reservations found for the selected date and time range.</p>
-</div>
-
-<!-- Modal -->
+<!-- Modal of Rooms-->
 <div
   *ngIf="showModal"
   class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
@@ -155,27 +149,78 @@
     </button>
 
     <!-- Modal Content -->
-    <h2 class="text-lg font-bold mb-4">Rooms of Bloc</h2>
-    <p class="text-gray-700 mb-6">
-      <button
-        (click)="openModalAddRoom()"
-        class="flex justify-center items-center h-6 w-6 bg-gray-100"
-      >
-        +
-      </button>
-    </p>
+    <h2 class="text-lg font-bold mb-4">
+      Rooms of {{ this.CurrentBloc.title }}
+    </h2>
+    <div class="text-gray-700 mb-6 bg-red-200">
+      <div *ngIf="Rooms.length > 0" class="flex">
+        <div *ngFor="let room of Rooms">
+          <button
+            class="flex justify-center items-center h-16 w-16 carreau"
+            (click)="ChooseRoom(room.id)"
+            [ngClass]="{
+              'selected-room': room.id === ChosenRoom.id
+            }"
+          >
+            {{ room.num }}
+            <div class="info">
+              <p><strong>Capacity:</strong> {{ room.capacite }}</p>
+              <p><strong>Description:</strong> {{ room.description }}</p>
+              <p><strong>Name:</strong> {{ room.name }}</p>
+              <p><strong>Numero:</strong> {{ room.num }}</p>
+              <p><strong>Type:</strong> {{ room.type }}</p>
+            </div>
+          </button>
+        </div>
+        <button
+          (click)="openModalAddRoom()"
+          class="flex justify-center items-center h-16 w-16 bg-gray-100"
+        >
+          +
+        </button>
+      </div>
+      <div *ngIf="Rooms.length === 0">
+        <button
+          (click)="openModalAddRoom()"
+          class="flex justify-center items-center h-16 w-16 bg-gray-100"
+        >
+          +
+        </button>
+      </div>
+    </div>
 
     <!-- Actions -->
     <div class="flex justify-end">
       <button
         class="bg-zinc-950 text-white px-4 py-2 rounded mr-2 hover:bg-zinc-800"
+        [disabled]="ChosenRoom.id === 0"
+        [ngClass]="{ 'opacity-50 cursor-not-allowed': ChosenRoom.id === 0 }"
+        (click)="openEvents()"
       >
         Attach an Event
       </button>
       <button
         class="bg-zinc-950 text-white px-4 py-2 rounded hover:bg-zinc-800"
+        [disabled]="ChosenRoom.id === 0"
+        [ngClass]="{ 'opacity-50 cursor-not-allowed': ChosenRoom.id === 0 }"
+        (click)="openModalAddEvent()"
       >
         Add an Event
+      </button>
+    </div>
+    <div
+      *ngIf="showEvents"
+      class="mb-6 p-4 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+    >
+      <!-- Nom de l'événement avec un bouton -->
+      <button
+        *ngFor="let event of Events"
+        class="w-full text-left px-4 py-2 text-white bg-gray-100 hover:bg-gray-600 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 mb-2"
+      >
+        {{ event.name }}
+        <div class="text-gray-600 text-sm mb-2">
+          <p><strong>Description :</strong> {{ event.description }}</p>
+        </div>
       </button>
     </div>
   </div>
@@ -297,15 +342,8 @@
             placeholder="Enter image URL"
           />
         </div>
-
         <!-- Bloc -->
-        <input
-          type="number"
-          value="{{ this.Bloc_id }}"
-          name="bloc_id"
-        />
-
-        <!-- Admin -->
+        <input type="number" [(ngModel)]="newRoom.bloc_id" name="bloc_id" />
 
         <!-- Actions -->
         <div class="flex justify-end">
@@ -326,3 +364,8 @@
     </div>
   </div>
 </div>
+
+<app-addevent
+  [showModalAddEvent]="showModalAddEvent"
+  (closeModalAddEvent)="closeModalAddEvent()"
+></app-addevent>

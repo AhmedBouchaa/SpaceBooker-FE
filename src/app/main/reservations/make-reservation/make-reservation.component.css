@@ -1,8 +1,52 @@
 .carre {
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scaling and shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scaling and shadow */
 }
 
 .carre:hover {
-    transform: scale(1.01);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Adjust values as needed */
+  transform: scale(1.01);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Adjust values as needed */
+}
+
+.carreau {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+.info {
+  position: absolute;
+  bottom: 110%; /* Position au-dessus du carreau */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.carreau:hover .info {
+  opacity: 1;
+  visibility: visible;
+}
+
+.selected-room {
+  background-image: url("../../../../../public/verifier.png");
+  width: 80px;
+  height: 80px;
+  background-size: cover; /* Ensure the image covers the entire area */
+  background-position: center; /* Center the image */
+  transition: all 0.3s ease;
+}
+
+.selected-room:hover {
+  background-color: #297fb900; /* Darker blue when hovered */
 }

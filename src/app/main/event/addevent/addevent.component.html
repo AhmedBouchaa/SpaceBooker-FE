@@ -1,0 +1,84 @@
+<!-- Modal Overlay -->
+<div
+  *ngIf="showModalAddEvent"
+  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+>
+  <div class="bg-white rounded-lg w-1/3 p-6 shadow-lg relative">
+    <!-- Close Button -->
+    <button
+      class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+      (click)="close()"
+    >
+      &times;
+    </button>
+
+    <!-- Modal Header -->
+    <h2 class="text-lg font-bold mb-4">Add Event</h2>
+
+    <!-- Modal Form -->
+    <form>
+      <!-- Event Name -->
+      <div class="mb-4">
+        <label for="eventName" class="block text-sm font-medium text-gray-700"
+          >Event Name</label
+        >
+        <input
+          type="text"
+          id="eventName"
+          [(ngModel)]="event.name"
+          name="name"
+          required
+          class="mt-1 block w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <!-- Description -->
+      <div class="mb-4">
+        <label for="description" class="block text-sm font-medium text-gray-700"
+          >Description</label
+        >
+        <textarea
+          id="description"
+          [(ngModel)]="event.description"
+          name="description"
+          rows="3"
+          required
+          class="mt-1 block w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        ></textarea>
+      </div>
+
+      <!-- Image URL -->
+      <div class="mb-4">
+        <label for="imgUrl" class="block text-sm font-medium text-gray-700"
+          >Image URL</label
+        >
+        <input
+          type="text"
+          id="imgUrl"
+          [(ngModel)]="event.img"
+          name="img"
+          class="mt-1 block w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-end space-x-4">
+        <!-- Close Button -->
+        <button
+          class="bg-red-950 text-white px-4 py-2 rounded mr-2 hover:bg-red-800"
+          (click)="close()"
+        >
+          Close
+        </button>
+
+        <!-- Save Button -->
+        <button
+          class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+          (click)="saveEvent()"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
