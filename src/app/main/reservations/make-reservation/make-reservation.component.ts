@@ -1,3 +1,4 @@
+import { Reservation } from './../../../interfaces/Reservation';
 import { Admin } from './../../../interfaces/Admin';
 import { BlocService } from './../../../services/bloc.service';
 import { Bloc } from './../../../interfaces/Bloc';
@@ -5,7 +6,6 @@ import { RoomService } from './../../../services/room.service';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // For ngModel binding
 import { CommonModule } from '@angular/common';
-import { Reservation } from '../../../interfaces/Reservation';
 import { Room } from '../../../interfaces/Room';
 import internal from 'stream';
 import { ReservationService } from '../../../services/reservation.service';
@@ -121,6 +121,11 @@ export class MakeReservationComponent implements OnInit {
     bloc7: '',
     bloc8: '',
   };
+
+  showToast = false;
+  toastMessage = '';
+  toastType: 'success' | 'error' | 'warning' = 'success';
+
   constructor(
     private reservationService: ReservationService,
     private roomService: RoomService,
@@ -128,10 +133,6 @@ export class MakeReservationComponent implements OnInit {
     private eventService: EventService
   ) {}
 
-  StartEverything(): void {
-    this.loadReservations();
-    this.FillBlocsData();
-  }
   ngOnInit(): void {
     const now = new Date();
     this.theDate = now.toISOString().split('T')[0]; // Get the current date in yyyy-MM-dd format
@@ -139,41 +140,160 @@ export class MakeReservationComponent implements OnInit {
     const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
     this.toTime = oneHourLater.toTimeString().split(':').slice(0, 2).join(':'); // Get the time one hour later in HH:mm format
 
-    this.newReservation.start_time = `${this.theDate}T${this.fromTime}:00`; // Example: 2024-12-02T16:31:12
-    this.newReservation.end_time = `${this.theDate}T${this.toTime}:00`; // Example: 2024-12-02T17:31:12
+    // Initialize reservation times
+    this.newReservation.start_time = `${this.theDate}T${this.fromTime}:00`;
+    this.newReservation.end_time = `${this.theDate}T${this.toTime}:00`;
 
+    // Initial data load
+    this.StartEverything();
+  }
+
+  StartEverything(): void {
+    // Vérifier que la date de fin est après la date de début
+    if (
+      new Date(this.theDate + 'T' + this.fromTime) >=
+      new Date(this.theDate + 'T' + this.toTime)
+    ) {
+      this.showToastMessage(
+        "L'heure de fin doit être après l'heure de début.",
+        'error'
+      );
+      return;
+    }
+
+    // Load data in sequence
     this.loadRooms();
-    this.getEvents();
+  }
+
+  loadRooms(): void {
+    this.roomService.getRooms().subscribe({
+      next: (data) => {
+        this.AllRooms = data;
+        this.getEvents(); // Load events after rooms
+      },
+      error: (error) => {
+        console.error('Error fetching all rooms:', error);
+        this.showToastMessage(
+          'Erreur lors de la récupération des salles.',
+          'error'
+        );
+      }
+    });
+  }
+
+  getEvents(): void {
+    this.eventService.getEventByReserverId(1).subscribe({
+      next: (data) => {
+        this.Events = data;
+        this.loadReservations(); // Load reservations after events
+      },
+      error: (error) => {
+        console.error('Error fetching events for a reserver:', error);
+        this.showToastMessage(
+          'Erreur lors de la récupération des événements.',
+          'error'
+        );
+      }
+    });
   }
 
   loadReservations(): void {
     if (this.theDate && this.fromTime && this.toTime) {
       this.reservationService
         .getReservationsByDateAndTime(this.theDate, this.fromTime, this.toTime)
-        .subscribe(
-          (data) => {
+        .subscribe({
+          next: (data) => {
             this.reservations = data;
+            this.FillBlocsData(); // Fill blocs after all data is loaded
           },
-          (error) => {
+          error: (error) => {
             console.error('Error fetching reservations:', error);
+            this.showToastMessage(
+              'Erreur lors de la récupération des réservations.',
+              'error'
+            );
           }
-        );
+        });
     } else {
       console.warn('Please ensure all date and time fields are filled.');
+      this.showToastMessage(
+        'Veuillez remplir tous les champs de date et heure.',
+        'error'
+      );
     }
   }
 
-  loadRooms(): void {
-    this.roomService.getRooms().subscribe(
-      (data) => {
-        this.AllRooms = data;
-      },
-      (error) => {
-        console.error('Error fetching all rooms:', error);
-      }
-    );
+  showToastMessage(
+    message: string,
+    type: 'success' | 'error' | 'warning'
+  ): void {
+    // Reset any existing toast
+    this.showToast = false;
+    
+    // Small delay to ensure animation reset
+    setTimeout(() => {
+      this.toastMessage = message;
+      this.toastType = type;
+      this.showToast = true;
+
+      // Hide toast after 3 seconds
+      setTimeout(() => {
+        const toastElement = document.querySelector(
+          '.animate-toast-' + type
+        ) as HTMLElement;
+        if (toastElement) {
+          toastElement.classList.add('toast-exit');
+          // Hide toast after exit animation
+          setTimeout(() => {
+            this.showToast = false;
+          }, 500);
+        }
+      }, 3000);
+    }, 100);
   }
 
+  //donne les reservations selon un date specifique
+  // loadReservations(): void {
+  //   if (this.theDate && this.fromTime && this.toTime) {
+  //     this.reservationService
+  //       .getReservationsByDateAndTime(this.theDate, this.fromTime, this.toTime)
+  //       .subscribe(
+  //         (data) => {
+  //           this.reservations = data;
+  //         },
+  //         (error) => {
+  //           console.error('Error fetching reservations:', error);
+  //           this.showToastMessage(
+  //             'Erreur lors de la récupération des réservations.',
+  //             'error'
+  //           );
+  //         }
+  //       );
+  //   } else {
+  //     console.warn('Please ensure all date and time fields are filled.');
+  //     this.showToastMessage(
+  //       'Veuillez remplir tous les champs de date et heure.',
+  //       'error'
+  //     );
+  //   }
+  // }
+
+  //donne tous les rooms
+  // loadRooms(): void {
+  //   this.roomService.getRooms().subscribe(
+  //     (data) => {
+  //       this.AllRooms = data;
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching all rooms:', error);
+  //       this.showToastMessage(
+  //         'Erreur lors de la récupération des salles.',
+  //         'error'
+  //       );
+  //     }
+  //   );
+  // }
+  //donne les room selon le bloc
   loadRoomsByBlocId(): void {
     this.roomService.getRoomsByBlocId(this.Bloc_id).subscribe(
       (data) => {
@@ -185,6 +305,7 @@ export class MakeReservationComponent implements OnInit {
     );
   }
 
+  //donne le bloc selon l'id
   getBloc(): void {
     this.blocService.getBlocById(this.Bloc_id).subscribe(
       (data) => {
@@ -192,41 +313,55 @@ export class MakeReservationComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching room for a bloc:', error);
+        this.showToastMessage(
+          'Erreur lors de la récupération du bloc.',
+          'error'
+        );
       }
     );
   }
 
-  getEvents(): void {
-    this.eventService.getEventByReserverId(1).subscribe(
-      (data) => {
-        this.Events = data;
-      },
-      (error) => {
-        console.error('Error fetching events for a reserver:', error);
-      }
-    );
-  }
+  //donne tous les evenements
+  // getEvents(): void {
+  //   this.eventService.getEventByReserverId(1).subscribe(
+  //     (data) => {
+  //       this.Events = data;
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching events for a reserver:', error);
+  //       this.showToastMessage(
+  //         'Erreur lors de la récupération des événements.',
+  //         'error'
+  //       );
+  //     }
+  //   );
+  // }
 
+  //enregistrer une room
   saveRoom(): void {
     this.roomService
       .AddRoom(this.newRoom, this.Admin_id, this.Bloc_id)
       .subscribe(
         (createdRoom) => {
-          alert('Room created successfully!');
+          this.showToastMessage('Salle créée avec succès !', 'success');
           this.closeModalAddRoom();
           this.loadRooms();
           var bloc_id = this.Bloc_id;
           this.closeModal();
           this.openModal(bloc_id);
+          this.StartEverything();
         },
         (error) => {
           console.error('Error creating room:', error);
-          alert(
-            `Failed to create the room. ${error.message || error.error.message}`
+          this.showToastMessage(
+            'Erreur lors de la création de la salle.',
+            'error'
           );
         }
       );
   }
+
+  //enregistre une reservation
   saveReservation(event_id: number): void {
     // Préparer les données pour la nouvelle réservation
     const startTime = `${this.theDate}T${this.fromTime}:00`;
@@ -238,19 +373,25 @@ export class MakeReservationComponent implements OnInit {
     const now = new Date();
 
     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      alert('Les dates de début et de fin doivent être valides.');
+      this.showToastMessage(
+        'Les dates de début et de fin doivent être valides.',
+        'error'
+      );
       return;
     }
 
-    // Vérifier que la date de début est dans le futur
+    //Vérifier que la date de début est dans le futur
     // if (startDate < now) {
-    //   alert('La date de début doit être dans le futur.');
+    //   this.showToastMessage('La date de début doit être dans le futur.', 'error');
     //   return;
     // }
 
     // Vérifier que la date de fin est après la date de début
     if (endDate <= startDate) {
-      alert("L'heure de fin doit être après l'heure de début.");
+      this.showToastMessage(
+        "L'heure de fin doit être après l'heure de début.",
+        'error'
+      );
       return;
     }
 
@@ -258,7 +399,10 @@ export class MakeReservationComponent implements OnInit {
     const durationHours =
       (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60);
     if (durationHours > 8) {
-      alert('La durée de réservation ne peut pas dépasser 8 heures.');
+      this.showToastMessage(
+        'La durée de réservation ne peut pas dépasser 8 heures.',
+        'error'
+      );
       return;
     }
 
@@ -273,7 +417,10 @@ export class MakeReservationComponent implements OnInit {
       !this.newReservation.end_time ||
       !event_id
     ) {
-      alert('Veuillez remplir tous les champs nécessaires avant de procéder.');
+      this.showToastMessage(
+        'Veuillez remplir tous les champs nécessaires avant de procéder.',
+        'error'
+      );
       return;
     }
 
@@ -287,8 +434,9 @@ export class MakeReservationComponent implements OnInit {
       .subscribe({
         next: (isAvailable: boolean) => {
           if (!isAvailable) {
-            alert(
-              'Une réservation existe déjà pour cette salle et cette période.'
+            this.showToastMessage(
+              'Une réservation existe déjà pour cette salle et cette période.',
+              'error'
             );
             return;
           }
@@ -303,34 +451,37 @@ export class MakeReservationComponent implements OnInit {
             )
             .subscribe({
               next: (createdReservation) => {
-                alert('Réservation créée avec succès !');
+                this.showToastMessage(
+                  'Réservation créée avec succès !',
+                  'success'
+                );
                 this.loadReservations();
                 this.closeModal();
+                this.StartEverything();
               },
               error: (error) => {
                 console.error(
                   'Erreur lors de la création de la réservation :',
                   error
                 );
-                alert(
-                  `Impossible de créer la réservation. ${
-                    error.message ||
-                    error.error?.message ||
-                    'Veuillez réessayer plus tard.'
-                  }`
+                this.showToastMessage(
+                  'Erreur lors de la création de la réservation.',
+                  'error'
                 );
               },
             });
         },
         error: (error) => {
           console.error('Erreur lors de la vérification des doublons :', error);
-          alert(
-            'Une erreur est survenue lors de la vérification des réservations existantes.'
+          this.showToastMessage(
+            'Erreur lors de la vérification des réservations existantes.',
+            'error'
           );
         },
       });
   }
 
+  //remplir le room apres la selection
   ChooseRoom(num: number): void {
     const room = this.AllRooms.find((res) => res.id === num);
     if (room) {
@@ -339,28 +490,29 @@ export class MakeReservationComponent implements OnInit {
       this.makeChosenRoomEmpty();
     }
   }
-
+  //permet d'afficher les evenements
   openEvents(): void {
-    if (this.showEvents) this.showEvents = false;
-    else {
+    if (this.showEvents) {
+      this.showEvents = false;
+    } else {
       this.showEvents = true;
     }
   }
+  //modal des rooms
   openModal(param: number): void {
     this.Bloc_id = param;
     this.loadRoomsByBlocId();
     this.getBloc();
     this.showModal = true;
   }
-
   closeModal(): void {
     this.Bloc_id = 0;
     this.Rooms = [];
     this.makeChosenRoomEmpty();
     this.showModal = false;
-    this.showModalAddEvent = false;
+    this.showEvents = false;
   }
-
+  //form d'ajout d'un room
   openModalAddRoom(): void {
     this.newRoom.bloc_id = this.Bloc_id;
     this.showModalAddRoom = true;
@@ -383,6 +535,7 @@ export class MakeReservationComponent implements OnInit {
       admin: null,
     };
   }
+  //form pour creer un event
   openModalAddEvent() {
     this.showModalAddEvent = true;
   }
@@ -391,7 +544,7 @@ export class MakeReservationComponent implements OnInit {
     this.getEvents();
     this.showModalAddEvent = false;
   }
-
+  //vider le room
   makeChosenRoomEmpty(): void {
     this.ChosenRoom = {
       id: 0,
@@ -408,6 +561,7 @@ export class MakeReservationComponent implements OnInit {
       admin: null,
     };
   }
+  //vider la reservation
   makeNewReservationEmpty(): void {
     // Reset reservation object
     this.newReservation = {
@@ -420,6 +574,7 @@ export class MakeReservationComponent implements OnInit {
       room_id: null,
     };
   }
+  //pour savoir l'etat de chaque bloc
   FillBlocsData(): void {
     this.Bloc1 = [];
     this.Bloc2 = [];
@@ -533,7 +688,7 @@ export class MakeReservationComponent implements OnInit {
           this.blocBackground[blocKey] = '#bbf7d1'; // Empty - Light Green
         }
       } else {
-        this.blocBackground[blocKey] = '#E5E7EB55'; // Empty - Light Gray
+        this.blocBackground[blocKey] = '#E5E7EB55'; // NoRoom - Light Gray
       }
     }
   }
