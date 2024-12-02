@@ -5,7 +5,8 @@
       <!-- Top Left Square -->
       <button
         (click)="openModal(2)"
-        class="cursor-pointer carre z-50 absolute top-0 left-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
+        [style.background-color]="blocBackground.bloc2"
+        class="cursor-pointer carre z-50 absolute top-0 left-0 w-[35%] h-[35%] bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Mecanique
       </button>
@@ -13,13 +14,15 @@
       <!-- Top Horizontal Rectangle -->
       <button
         (click)="openModal(5)"
-        class="cursor-pointer carre absolute top-10 left-[35%] w-[30%] h-[15%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
+        [style.background-color]="blocBackground.bloc5"
+        class="cursor-pointer carre absolute top-10 left-[35%] w-[30%] h-[15%] bg-opacity-50 border-2 border-gray-200"
       ></button>
 
       <!-- Top Right Square -->
       <button
         (click)="openModal(1)"
-        class="cursor-pointer carre z-50 absolute top-0 right-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
+        [style.background-color]="blocBackground.bloc1"
+        class="cursor-pointer carre z-50 absolute top-0 right-0 w-[35%] h-[35%] bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Informatique
       </button>
@@ -27,19 +30,22 @@
       <!-- Left Vertical Rectangle -->
       <button
         (click)="openModal(6)"
-        class="cursor-pointer carre absolute left-10 top-[35%] w-[15%] h-[30%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
+        [style.background-color]="blocBackground.bloc6"
+        class="cursor-pointer carre absolute left-10 top-[35%] w-[15%] h-[30%] bg-opacity-50 border-2 border-gray-200"
       ></button>
 
       <!-- Right Vertical Rectangle -->
       <button
         (click)="openModal(7)"
-        class="cursor-pointer carre absolute right-10 top-[35%] w-[15%] h-[30%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
+        [style.background-color]="blocBackground.bloc7"
+        class="cursor-pointer carre absolute right-10 top-[35%] w-[15%] h-[30%] bg-opacity-50 border-2 border-gray-200"
       ></button>
 
       <!-- Bottom Left Square -->
       <button
         (click)="openModal(3)"
-        class="cursor-pointer carre z-50 absolute bottom-0 left-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
+        [style.background-color]="blocBackground.bloc3"
+        class="cursor-pointer carre z-50 absolute bottom-0 left-0 w-[35%] h-[35%] bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Gestion
       </button>
@@ -47,13 +53,15 @@
       <!-- Bottom Horizontal Rectangle -->
       <button
         (click)="openModal(8)"
-        class="cursor-pointer carre absolute bottom-10 left-[35%] w-[30%] h-[15%] bg-gray-200 bg-opacity-50 border-2 border-gray-200"
+        [style.background-color]="blocBackground.bloc8"
+        class="cursor-pointer carre absolute bottom-10 left-[35%] w-[30%] h-[15%] bg-opacity-50 border-2 border-gray-200"
       ></button>
 
       <!-- Bottom Right Square -->
       <button
         (click)="openModal(4)"
-        class="cursor-pointer carre z-50 absolute bottom-0 right-0 w-[35%] h-[35%] bg-gray-200 bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
+        [style.background-color]="blocBackground.bloc4"
+        class="cursor-pointer carre z-50 absolute bottom-0 right-0 w-[35%] h-[35%] bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
       >
         Dept. Electrique
       </button>
@@ -92,6 +100,7 @@
       <div class="flex justify-end items-center gap-10 mt-4 px-6">
         <button
           class="border-2 border-gray-200 py-1 px-3 rounded-md text-gray-800 hover:bg-gray-800 hover:text-white"
+          (click)="StartEverything()"
         >
           Search
         </button>
@@ -128,7 +137,7 @@
 <img src="herbe.png" class="z-0 absolute top-[500px] left-[900px] w-6 h-6 ">
 <img src="herbe.png" class="z-0 absolute top-[360px] left-[50px] w-6 h-6 ">
 <img src="herbe.png" class="z-0 absolute top-[400px] left-[1200px] w-6 h-6 ">
-<img src="herbe.png" class="z-0 absolute top-[540px] left-[300px] w-6 h-6 "> -->
+<img src="herbe.png" class="z-0 absolute top-[540px] left-[300px] w-6 h-6 ">
 
 <!-- Modal of Rooms-->
 <div
@@ -212,9 +221,9 @@
       *ngIf="showEvents"
       class="mb-6 p-4 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
     >
-      <!-- Nom de l'événement avec un bouton -->
       <button
         *ngFor="let event of Events"
+        (click)="saveReservation(event.id)"
         class="w-full text-left px-4 py-2 text-white bg-gray-100 hover:bg-gray-600 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 mb-2"
       >
         {{ event.name }}

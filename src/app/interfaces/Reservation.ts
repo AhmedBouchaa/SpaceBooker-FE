@@ -4,9 +4,8 @@ import { Room } from './Room'; // Import the Room interface
 
 export interface Reservation {
   id: number; // Reservation ID
-  date: string; // Date of reservation (as an ISO string for LocalDateTime)
-  startTime: string; // Start time (as an ISO string for LocalTime)
-  endTime: string; // End time (as an ISO string for LocalTime)
+  start_time: string; // Start time (as an ISO string for LocalTime)
+  end_time: string; // End time (as an ISO string for LocalTime)
   state: string; // State of the reservation (e.g., confirmed, pending)
   event?: AnEvent; // Associated event (One-to-One relationship, optional)
   event_id: number | null;
