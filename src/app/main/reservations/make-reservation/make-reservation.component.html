@@ -2,17 +2,19 @@
 <div
   *ngIf="showToast"
   [ngClass]="{
-    'fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50': true,
-    'bg-green-100 border-l-4 border-green-500 text-green-700 animate-toast-success': toastType === 'success',
-    'bg-red-100 border-l-4 border-red-500 text-red-700 animate-toast-error': toastType === 'error',
-    'bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 animate-toast-warning': toastType === 'warning'
+    'fixed top-4 left-1/2 transform animate-slide-down p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-zinc-200 hover:border-zinc-300 z-[9999]': true,
+    'bg-green-50 border-l-4 border-green-500 text-green-800':
+      toastType === 'success',
+    'bg-red-50 border-l-4 border-red-500 text-red-800': toastType === 'error',
+    'bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800':
+      toastType === 'warning'
   }"
 >
   <div class="flex items-center">
     <div class="py-1">
       <svg
         *ngIf="toastType === 'success'"
-        class="w-6 h-6 mr-4"
+        class="w-6 h-6 mr-4 text-green-800"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -27,7 +29,7 @@
       </svg>
       <svg
         *ngIf="toastType === 'error'"
-        class="w-6 h-6 mr-4"
+        class="w-6 h-6 mr-4 text-red-800"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -42,7 +44,7 @@
       </svg>
       <svg
         *ngIf="toastType === 'warning'"
-        class="w-6 h-6 mr-4"
+        class="w-6 h-6 mr-4 text-yellow-800"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -57,20 +59,22 @@
       </svg>
     </div>
     <div>
-      <p class="font-bold">{{ toastMessage }}</p>
+      <p class="font-bold text-zinc-800">{{ toastMessage }}</p>
     </div>
   </div>
 </div>
 
 <div class="bg-zinc-950 h-full w-52 absolute left-0 bottom-0 z-0"></div>
 <div class="h-full w-full flex pl-[8%] pt-10 gap-8">
-  <div class="w-[50%] h-[100%] rounded-xl border-2 border-gray-200 p-5">
+  <div
+    class="w-[50%] h-[100%] rounded-xl border border-zinc-200 hover:border-zinc-300 transition-all duration-300 p-5"
+  >
     <div class="relative h-full w-full flex items-center justify-center">
       <!-- Top Left Square -->
       <button
         (click)="openModal(2)"
         [style.background-color]="blocBackground.bloc2"
-        class="cursor-pointer carre z-50 absolute top-0 left-0 w-[35%] h-[35%] bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
+        class="cursor-pointer carre z-50 absolute top-0 left-0 w-[35%] h-[35%] bg-opacity-50 border border-zinc-200 hover:border-zinc-300 transition-all duration-300 rounded-2xl flex justify-center items-center"
       >
         Dept. Mecanique
       </button>
@@ -79,14 +83,14 @@
       <button
         (click)="openModal(5)"
         [style.background-color]="blocBackground.bloc5"
-        class="cursor-pointer carre absolute top-10 left-[35%] w-[30%] h-[15%] bg-opacity-50 border-2 border-gray-200"
+        class="cursor-pointer carre absolute top-10 left-[35%] w-[30%] h-[15%] bg-opacity-50 border border-zinc-200 hover:border-zinc-300 transition-all duration-300"
       ></button>
 
       <!-- Top Right Square -->
       <button
         (click)="openModal(1)"
         [style.background-color]="blocBackground.bloc1"
-        class="cursor-pointer carre z-50 absolute top-0 right-0 w-[35%] h-[35%] bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
+        class="cursor-pointer carre z-50 absolute top-0 right-0 w-[35%] h-[35%] bg-opacity-50 border border-zinc-200 hover:border-zinc-300 transition-all duration-300 rounded-2xl flex justify-center items-center"
       >
         Dept. Informatique
       </button>
@@ -95,21 +99,21 @@
       <button
         (click)="openModal(6)"
         [style.background-color]="blocBackground.bloc6"
-        class="cursor-pointer carre absolute left-10 top-[35%] w-[15%] h-[30%] bg-opacity-50 border-2 border-gray-200"
+        class="cursor-pointer carre absolute left-10 top-[35%] w-[15%] h-[30%] bg-opacity-50 border border-zinc-200 hover:border-zinc-300 transition-all duration-300"
       ></button>
 
       <!-- Right Vertical Rectangle -->
       <button
         (click)="openModal(7)"
         [style.background-color]="blocBackground.bloc7"
-        class="cursor-pointer carre absolute right-10 top-[35%] w-[15%] h-[30%] bg-opacity-50 border-2 border-gray-200"
+        class="cursor-pointer carre absolute right-10 top-[35%] w-[15%] h-[30%] bg-opacity-50 border border-zinc-200 hover:border-zinc-300 transition-all duration-300"
       ></button>
 
       <!-- Bottom Left Square -->
       <button
         (click)="openModal(3)"
         [style.background-color]="blocBackground.bloc3"
-        class="cursor-pointer carre z-50 absolute bottom-0 left-0 w-[35%] h-[35%] bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
+        class="cursor-pointer carre z-50 absolute bottom-0 left-0 w-[35%] h-[35%] bg-opacity-50 border border-zinc-200 hover:border-zinc-300 transition-all duration-300 rounded-2xl flex justify-center items-center"
       >
         Dept. Gestion
       </button>
@@ -118,22 +122,24 @@
       <button
         (click)="openModal(8)"
         [style.background-color]="blocBackground.bloc8"
-        class="cursor-pointer carre absolute bottom-10 left-[35%] w-[30%] h-[15%] bg-opacity-50 border-2 border-gray-200"
+        class="cursor-pointer carre absolute bottom-10 left-[35%] w-[30%] h-[15%] bg-opacity-50 border border-zinc-200 hover:border-zinc-300 transition-all duration-300"
       ></button>
 
       <!-- Bottom Right Square -->
       <button
         (click)="openModal(4)"
         [style.background-color]="blocBackground.bloc4"
-        class="cursor-pointer carre z-50 absolute bottom-0 right-0 w-[35%] h-[35%] bg-opacity-50 border-2 border-gray-200 rounded-2xl flex justify-center items-center"
+        class="cursor-pointer carre z-50 absolute bottom-0 right-0 w-[35%] h-[35%] bg-opacity-50 border border-zinc-200 hover:border-zinc-300 transition-all duration-300 rounded-2xl flex justify-center items-center"
       >
         Dept. Electrique
       </button>
     </div>
   </div>
   <div class="w-[50%]">
-    <div class="p-6 mb-5 h-[48%] w-[80%] rounded-xl border-2 border-gray-200">
-      <span class="w-60 p-2 text-gray-800 mr-4 text-xl"
+    <div
+      class="p-6 mb-5 h-[48%] w-[80%] rounded-xl border border-zinc-200 hover:border-zinc-300 transition-all duration-300"
+    >
+      <span class="w-60 p-2 text-zinc-800 mr-4 text-xl"
         >Reservation Date:
       </span>
       <input
@@ -141,7 +147,7 @@
         name=""
         id="dateInput"
         [(ngModel)]="theDate"
-        class="mt-4 mb-2 w-[90%] ml-5 rounded-md border-2 borer-gray-800 px-6 text-gray-800"
+        class="mt-4 mb-2 w-[90%] ml-5 rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 px-6 text-zinc-800"
       />
       <div class="my-2 w-[90%] ml-5">
         <span class="mr-2">From</span>
@@ -150,7 +156,7 @@
           name=""
           [(ngModel)]="fromTime"
           id="timeInput"
-          class="rounded-md border-2 borer-gray-800 w-[39.1%] px-6 text-gray-800"
+          class="rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 w-[39.1%] px-6 text-zinc-800"
         />
         <span class="mx-2">To</span>
         <input
@@ -158,24 +164,26 @@
           name=""
           [(ngModel)]="toTime"
           id="timeInput"
-          class="rounded-md border-2 borer-gray-800 w-[39.1%] px-6 text-gray-800"
+          class="rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 w-[39.1%] px-6 text-zinc-800"
         />
       </div>
       <div class="flex justify-end items-center gap-10 mt-4 px-6">
         <button
-          class="border-2 border-gray-200 py-1 px-3 rounded-md text-gray-800 hover:bg-gray-800 hover:text-white"
+          class="border-2 border-zinc-200 py-1 px-3 rounded-md text-zinc-800 hover:bg-zinc-800 hover:text-white"
           (click)="StartEverything()"
         >
           Search
         </button>
       </div>
     </div>
-    <div class="w-[80%] h-[48%] rounded-xl border-2 border-gray-200"></div>
+    <div
+      class="w-[80%] h-[48%] rounded-xl border border-zinc-200 hover:border-zinc-300 transition-all duration-300"
+    ></div>
   </div>
 </div>
 <div class="py-4 gap-8 px-[8%] w-[100%]">
   <div
-    class="bg-white pl-[10%] flex flex-row justify-center items-center w-[100%] h-[10%] rounded-xl border-2 border-gray-200 p-4"
+    class="bg-white pl-[10%] flex flex-row justify-center items-center w-[100%] h-[10%] rounded-xl border border-zinc-200 hover:border-zinc-300 transition-all duration-300 p-4"
   >
     <div class="h-[20%] w-full flex items-center p-3 gap-4">
       <div class="rounded-md w-6 h-6 bg-red-200"></div>
@@ -197,101 +205,197 @@
   </div>
 </div>
 
-<!-- <img src="herbe.png" class="z-0 absolute top-[200px] left-[400px] w-6 h-6 ">
-<img src="herbe.png" class="z-0 absolute top-[500px] left-[900px] w-6 h-6 ">
-<img src="herbe.png" class="z-0 absolute top-[360px] left-[50px] w-6 h-6 ">
-<img src="herbe.png" class="z-0 absolute top-[400px] left-[1200px] w-6 h-6 ">
-<img src="herbe.png" class="z-0 absolute top-[540px] left-[300px] w-6 h-6 ">
-
 <!-- Modal of Rooms-->
 <div
   *ngIf="showModal"
-  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
 >
   <div
-    class="bg-white rounded-lg w-1/3 p-6 shadow-lg relative"
-    role="dialog"
-    aria-modal="true"
+    class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[80vh] overflow-y-auto border border-zinc-200 hover:border-zinc-300 transition-all duration-300"
   >
-    <!-- Close Button -->
-    <button
-      class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-      (click)="closeModal()"
-    >
-      &times;
-    </button>
+    <!-- En-tête amélioré -->
+    <div class="flex justify-between items-center mb-6 border-b pb-4">
+      <div>
+        <h2 class="text-2xl font-bold text-zinc-800">
+          {{ CurrentBloc.title }}
+        </h2>
+        <p class="text-zinc-600 mt-1">There is {{ Rooms.length }} Rooms</p>
+      </div>
+      <button
+        (click)="closeModal()"
+        class="text-zinc-500 hover:text-zinc-700 transition-colors p-2 hover:bg-zinc-100 rounded-full"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
 
     <!-- Modal Content -->
-    <h2 class="text-lg font-bold mb-4">
-      Rooms of {{ this.CurrentBloc.title }}
-    </h2>
-    <div class="text-gray-700 mb-6 bg-red-200">
-      <div *ngIf="Rooms.length > 0" class="flex">
-        <div *ngFor="let room of Rooms">
+    <div class="">
+      <div
+        *ngIf="Rooms.length > 0"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6"
+      >
+        <div *ngFor="let room of Rooms" class="carre relative group">
           <button
-            class="flex justify-center items-center h-16 w-16 carreau"
+            class="w-full aspect-square bg-white rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 overflow-hidden"
             (click)="ChooseRoom(room.id)"
             [ngClass]="{
-              'selected-room': room.id === ChosenRoom.id
+              'ring-2 ring-zinc-950 border-zinc-950': room.id === ChosenRoom.id
             }"
           >
-            {{ room.num }}
-            <div class="info">
-              <p><strong>Capacity:</strong> {{ room.capacite }}</p>
-              <p><strong>Description:</strong> {{ room.description }}</p>
-              <p><strong>Name:</strong> {{ room.name }}</p>
-              <p><strong>Numero:</strong> {{ room.num }}</p>
-              <p><strong>Type:</strong> {{ room.type }}</p>
+            <!-- Icône et nom -->
+            <div
+              class="h-full w-full p-4 flex flex-col items-center justify-center"
+            >
+              <div class="mb-2">
+                <svg
+                  class="w-8 h-8 text-zinc-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  />
+                </svg>
+              </div>
+              <span class="font-medium text-zinc-900">{{ room.name }}</span>
+              <span class="text-sm text-zinc-500">N°{{ room.num }}</span>
+            </div>
+
+            <!-- Info bulle au survol -->
+            <div
+              class="opacity-0 group-hover:opacity-100 absolute inset-0 bg-zinc-900 bg-opacity-90 text-white p-3 transition-opacity duration-200 rounded-lg"
+            >
+              <div
+                class="h-full flex flex-col justify-center space-y-1 text-sm"
+              >
+                <p>
+                  <span class="text-zinc-400">Capacité:</span>
+                  {{ room.capacite }} pers.
+                </p>
+                <p><span class="text-zinc-400">Type:</span> {{ room.type }}</p>
+                <p class="text-xs text-zinc-300 line-clamp-2">
+                  <span class="text-zinc-400">Description:</span>
+                  {{ room.description }}
+                </p>
+              </div>
             </div>
           </button>
         </div>
+
+        <!-- Bouton Ajouter -->
         <button
           (click)="openModalAddRoom()"
-          class="flex justify-center items-center h-16 w-16 bg-gray-100"
+          class="aspect-square bg-zinc-50 rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 flex flex-col items-center justify-center gap-2 group"
         >
-          +
+          <svg
+            class="w-8 h-8 text-zinc-400 group-hover:text-zinc-950"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+          <span class="text-sm text-zinc-600 group-hover:text-zinc-950"
+            >Ajouter une salle</span
+          >
         </button>
       </div>
-      <div *ngIf="Rooms.length === 0">
+
+      <!-- État vide -->
+      <div
+        *ngIf="Rooms.length === 0"
+        class="flex flex-col items-center justify-center py-12 bg-zinc-50 rounded-lg"
+      >
+        <svg
+          class="w-16 h-16 text-zinc-400 mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+          />
+        </svg>
+        <h3 class="text-lg font-medium text-zinc-900 mb-2">
+          Aucune salle disponible
+        </h3>
+        <p class="text-zinc-600 mb-4">
+          Commencez par ajouter une nouvelle salle
+        </p>
         <button
           (click)="openModalAddRoom()"
-          class="flex justify-center items-center h-16 w-16 bg-gray-100"
+          class="inline-flex items-center px-4 py-2 bg-zinc-950 text-white rounded-lg hover:bg-zinc-800 transition-colors duration-300 gap-2"
         >
-          +
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+          Ajouter une salle
         </button>
       </div>
     </div>
 
     <!-- Actions -->
-    <div class="flex justify-end">
+    <div class="flex justify-end gap-2">
       <button
-        class="bg-zinc-950 text-white px-4 py-2 rounded mr-2 hover:bg-zinc-800"
+        class="px-4 py-2 rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 text-white bg-zinc-800 hover:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
         [disabled]="ChosenRoom.id === 0"
-        [ngClass]="{ 'opacity-50 cursor-not-allowed': ChosenRoom.id === 0 }"
         (click)="openEvents()"
       >
         Attach an Event
       </button>
       <button
-        class="bg-zinc-950 text-white px-4 py-2 rounded hover:bg-zinc-800"
+        class="px-4 py-2 rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 text-white bg-zinc-800 hover:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
         [disabled]="ChosenRoom.id === 0"
-        [ngClass]="{ 'opacity-50 cursor-not-allowed': ChosenRoom.id === 0 }"
         (click)="openModalAddEvent()"
       >
         Add an Event
       </button>
     </div>
-    <div
-      *ngIf="showEvents"
-      class="mb-6 p-4 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-    >
+
+    <!-- Liste des événements -->
+    <div *ngIf="showEvents" class="mt-4 space-y-2">
       <button
         *ngFor="let event of Events"
         (click)="saveReservation(event.id)"
-        class="w-full text-left px-4 py-2 text-white bg-gray-100 hover:bg-gray-600 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300 mb-2"
+        class="w-full text-left px-4 py-3 text-zinc-700 bg-white hover:bg-zinc-50 rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-950"
       >
-        {{ event.name }}
-        <div class="text-gray-600 text-sm mb-2">
+        <div class="font-medium">{{ event.name }}</div>
+        <div class="text-zinc-500 text-sm mt-1">
           <p><strong>Description :</strong> {{ event.description }}</p>
         </div>
       </button>
@@ -305,25 +409,27 @@
   class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
 >
   <div
-    class="bg-white rounded-lg w-1/3 p-6 shadow-lg relative"
+    class="bg-white rounded-lg w-1/3 p-6 border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-lg relative"
     role="dialog"
     aria-modal="true"
   >
     <!-- Close Button -->
     <button
-      class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+      class="absolute top-2 right-2 text-zinc-500 hover:text-zinc-700"
       (click)="closeModalAddRoom()"
     >
       &times;
     </button>
 
     <!-- Modal Content -->
-    <div class="max-w-4xl mx-auto bg-white shadow-md rounded p-6">
+    <div
+      class="max-w-4xl mx-auto bg-white border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-md rounded p-6"
+    >
       <h2 class="text-2xl font-bold mb-4">Add New Room</h2>
       <form>
         <!-- Room Name -->
         <div class="mb-4">
-          <label for="name" class="block text-sm font-medium text-gray-700"
+          <label for="name" class="block text-sm font-medium text-zinc-700"
             >Room Name</label
           >
           <input
@@ -331,14 +437,14 @@
             id="name"
             name="name"
             [(ngModel)]="newRoom.name"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             placeholder="Enter room name"
           />
         </div>
 
         <!-- Room Number -->
         <div class="mb-4">
-          <label for="num" class="block text-sm font-medium text-gray-700"
+          <label for="num" class="block text-sm font-medium text-zinc-700"
             >Room Number</label
           >
           <input
@@ -346,7 +452,7 @@
             id="num"
             name="num"
             [(ngModel)]="newRoom.num"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             placeholder="Enter room number"
           />
         </div>
@@ -355,7 +461,7 @@
         <div class="mb-4">
           <label
             for="description"
-            class="block text-sm font-medium text-gray-700"
+            class="block text-sm font-medium text-zinc-700"
             >Description</label
           >
           <textarea
@@ -363,21 +469,21 @@
             name="description"
             rows="4"
             [(ngModel)]="newRoom.description"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             placeholder="Enter room description"
           ></textarea>
         </div>
 
         <!-- Type -->
         <div class="mb-4">
-          <label for="type" class="block text-sm font-medium text-gray-700"
+          <label for="type" class="block text-sm font-medium text-zinc-700"
             >Type</label
           >
           <select
             id="type"
             name="type"
             [(ngModel)]="newRoom.type"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
           >
             <option value="">Select a type</option>
             <option value="classroom">Classroom</option>
@@ -388,7 +494,7 @@
 
         <!-- Capacity -->
         <div class="mb-4">
-          <label for="capacite" class="block text-sm font-medium text-gray-700"
+          <label for="capacite" class="block text-sm font-medium text-zinc-700"
             >Capacity</label
           >
           <input
@@ -396,14 +502,14 @@
             id="capacite"
             name="capacite"
             [(ngModel)]="newRoom.capacite"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             placeholder="Enter room capacity"
           />
         </div>
 
         <!-- Image URL -->
         <div class="mb-4">
-          <label for="img" class="block text-sm font-medium text-gray-700"
+          <label for="img" class="block text-sm font-medium text-zinc-700"
             >Image URL</label
           >
           <input
@@ -411,7 +517,7 @@
             id="img"
             name="img"
             [(ngModel)]="newRoom.img"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             placeholder="Enter image URL"
           />
         </div>
@@ -421,7 +527,7 @@
         <!-- Actions -->
         <div class="flex justify-end">
           <button
-            class="bg-red-950 text-white px-4 py-2 rounded mr-2 hover:bg-red-800"
+            class="px-4 py-2 rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 text-white bg-zinc-800 hover:bg-zinc-900"
             (click)="closeModalAddRoom()"
           >
             Close
