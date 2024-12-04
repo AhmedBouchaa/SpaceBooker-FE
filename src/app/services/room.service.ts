@@ -39,6 +39,9 @@ export class RoomService {
     );
   }
 
+  UpdateRoom(room: Room): Observable<Room> {
+    return this.http.put<Room>(`${this.apiUrl}rooms`, room);
+  }
   getRoomsByBlocId(bloc_id: number): Observable<Room[]> {
     const url = `${this.apiUrl}rooms/bloc/${bloc_id}`;
     return this.http.get<Room[]>(url);

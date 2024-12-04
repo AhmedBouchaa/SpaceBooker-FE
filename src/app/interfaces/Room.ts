@@ -15,4 +15,5 @@ export interface Room {
   admin?: Admin | null; // Many-to-One relationship with Admin
   admin_id: number | null;
   reservations?: Reservation[]; // One-to-Many relationship with Reservation
+  status: string;
 }

@@ -68,6 +68,7 @@ export class MakeReservationComponent implements OnInit {
     bloc_id: null,
     admin_id: null,
     admin: null,
+    status: '',
   };
   newRoom: Room = {
     id: 0,
@@ -82,6 +83,7 @@ export class MakeReservationComponent implements OnInit {
     bloc_id: null,
     admin_id: null,
     admin: null,
+    status: '',
   };
   newReservation: Reservation = {
     id: 0,
@@ -205,6 +207,14 @@ export class MakeReservationComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.reservations = data;
+            for (let i = 0; i < this.AllRooms.length; i++) {
+              const room = this.AllRooms[i];
+              const reservation = this.reservations.find(
+                (res) => res.room?.id === room.id
+              );
+              room.status = reservation ? 'occupied' : 'available';
+              console.log(room);
+            }
             this.FillBlocsData(); // Fill blocs after all data is loaded
           },
           error: (error) => {
@@ -226,31 +236,45 @@ export class MakeReservationComponent implements OnInit {
 
   showToastMessage(
     message: string,
-    type: 'success' | 'error' | 'warning'
+    type: 'success' | 'error' | 'warning' = 'success'
   ): void {
-    // Reset any existing toast
-    this.showToast = false;
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
 
-    // Small delay to ensure animation reset
+    // Automatically hide the toast after 3 seconds
     setTimeout(() => {
-      this.toastMessage = message;
-      this.toastType = type;
-      this.showToast = true;
+      this.showToast = false;
+    }, 3000);
+  }
 
-      // Hide toast after 3 seconds
-      setTimeout(() => {
-        const toastElement = document.querySelector(
-          '.animate-toast-' + type
-        ) as HTMLElement;
-        if (toastElement) {
-          toastElement.classList.add('toast-exit');
-          // Hide toast after exit animation
-          setTimeout(() => {
-            this.showToast = false;
-          }, 500);
-        }
-      }, 3000);
-    }, 100);
+  // Check if a room is available for the selected time slot
+  isRoomAvailable(room: Room): boolean {
+    if (
+      !room ||
+      !room.reservations ||
+      !this.theDate ||
+      !this.fromTime ||
+      !this.toTime
+    ) {
+      return true;
+    }
+
+    const selectedStart = new Date(`${this.theDate}T${this.fromTime}`);
+    const selectedEnd = new Date(`${this.theDate}T${this.toTime}`);
+
+    // Check if there are any overlapping reservations
+    return !room.reservations.some((reservation) => {
+      const reservationStart = new Date(reservation.start_time);
+      const reservationEnd = new Date(reservation.end_time);
+
+      // Check for overlap
+      return (
+        (selectedStart >= reservationStart && selectedStart < reservationEnd) ||
+        (selectedEnd > reservationStart && selectedEnd <= reservationEnd) ||
+        (selectedStart <= reservationStart && selectedEnd >= reservationEnd)
+      );
+    });
   }
 
   //donne les reservations selon un date specifique
@@ -296,14 +320,19 @@ export class MakeReservationComponent implements OnInit {
   // }
   //donne les room selon le bloc
   loadRoomsByBlocId(): void {
-    this.roomService.getRoomsByBlocId(this.Bloc_id).subscribe(
-      (data) => {
-        this.Rooms = data;
-      },
-      (error) => {
-        console.error('Error fetching room for a bloc:', error);
+    for (let i = 0; i < this.AllRooms.length; i++) {
+      if (this.AllRooms[i].bloc?.id == this.Bloc_id) {
+        this.Rooms.push(this.AllRooms[i]);
       }
-    );
+    }
+    // this.roomService.getRoomsByBlocId(this.Bloc_id).subscribe(
+    //   (data) => {
+    //     this.Rooms = data;
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching room for a bloc:', error);
+    //   }
+    // );
   }
 
   //donne le bloc selon l'id
@@ -384,7 +413,24 @@ export class MakeReservationComponent implements OnInit {
   }
 
   modifyRoom(): void {
-    alert('modify');
+    this.roomService.UpdateRoom(this.ChosenRoom).subscribe(
+      (updatedRoom) => {
+        this.showToastMessage('Salle modifier avec succès !', 'success');
+        this.closeModalModifyRoom();
+        this.loadRooms();
+        var bloc_id = this.Bloc_id;
+        this.closeModal();
+        this.openModal(bloc_id);
+        this.StartEverything();
+      },
+      (error) => {
+        console.error('Error updating room:', error);
+        this.showToastMessage(
+          'Erreur lors de la création de la salle.',
+          'error'
+        );
+      }
+    );
   }
   //enregistre une reservation
   saveReservation(event_id: number): void {
@@ -558,6 +604,7 @@ export class MakeReservationComponent implements OnInit {
       bloc_id: 0,
       admin_id: this.Admin_id,
       admin: null,
+      status: '',
     };
   } //form de modify d'un room
   openModalModifyRoom(): void {
@@ -592,6 +639,7 @@ export class MakeReservationComponent implements OnInit {
       bloc_id: null,
       admin_id: null,
       admin: null,
+      status: '',
     };
   }
   //vider la reservation
