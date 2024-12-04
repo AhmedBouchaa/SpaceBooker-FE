@@ -30,6 +30,14 @@ export class RoomService {
     // Use PUT method to update the room, passing the room object and bloc_id as query parameter
     return this.http.post<Room>(`${this.apiUrl}rooms`, room, { params });
   }
+  DeleteRoom(roomId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}rooms/${roomId}`).pipe(
+      catchError((error) => {
+        console.error('Error deleting room:', error);
+        return throwError(() => new Error('Failed to delete room.'));
+      })
+    );
+  }
 
   getRoomsByBlocId(bloc_id: number): Observable<Room[]> {
     const url = `${this.apiUrl}rooms/bloc/${bloc_id}`;

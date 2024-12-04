@@ -30,6 +30,7 @@ interface RoomWithStatus {
 export class MakeReservationComponent implements OnInit {
   showModal: boolean = false;
   showModalAddRoom: boolean = false;
+  showModalModifyRoom: boolean = false;
   showModalAddEvent: boolean = false;
   showEvents: boolean = false;
   theDate: string = '';
@@ -177,7 +178,7 @@ export class MakeReservationComponent implements OnInit {
           'Erreur lors de la récupération des salles.',
           'error'
         );
-      }
+      },
     });
   }
 
@@ -193,7 +194,7 @@ export class MakeReservationComponent implements OnInit {
           'Erreur lors de la récupération des événements.',
           'error'
         );
-      }
+      },
     });
   }
 
@@ -212,7 +213,7 @@ export class MakeReservationComponent implements OnInit {
               'Erreur lors de la récupération des réservations.',
               'error'
             );
-          }
+          },
         });
     } else {
       console.warn('Please ensure all date and time fields are filled.');
@@ -229,7 +230,7 @@ export class MakeReservationComponent implements OnInit {
   ): void {
     // Reset any existing toast
     this.showToast = false;
-    
+
     // Small delay to ensure animation reset
     setTimeout(() => {
       this.toastMessage = message;
@@ -360,7 +361,31 @@ export class MakeReservationComponent implements OnInit {
         }
       );
   }
+  deleteRoom(): void {
+    const confirmation = confirm(
+      'Do you really want to delete this room? Note that all related reservations will also be deleted.'
+    );
 
+    if (confirmation) {
+      alert('Deleting...');
+      this.roomService.DeleteRoom(this.ChosenRoom.id).subscribe({
+        next: (data) => {
+          this.showToastMessage('Room deleted successfully!', 'success');
+          this.loadRooms(); // Use this to call the loadRooms method
+          this.closeModal();
+          this.openModal(this.CurrentBloc.id);
+        },
+        error: (err) => {
+          console.error('Error deleting the room:', err);
+          this.showToastMessage('Error deleting the room.', 'error');
+        },
+      });
+    }
+  }
+
+  modifyRoom(): void {
+    alert('modify');
+  }
   //enregistre une reservation
   saveReservation(event_id: number): void {
     // Préparer les données pour la nouvelle réservation
@@ -534,6 +559,14 @@ export class MakeReservationComponent implements OnInit {
       admin_id: this.Admin_id,
       admin: null,
     };
+  } //form de modify d'un room
+  openModalModifyRoom(): void {
+    this.ChosenRoom.bloc_id = this.Bloc_id;
+    this.showModalModifyRoom = true;
+  }
+
+  closeModalModifyRoom(): void {
+    this.showModalModifyRoom = false;
   }
   //form pour creer un event
   openModalAddEvent() {

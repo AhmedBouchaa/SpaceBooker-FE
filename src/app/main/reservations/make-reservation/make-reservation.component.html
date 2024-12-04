@@ -374,6 +374,20 @@
       <button
         class="px-4 py-2 rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 text-white bg-zinc-800 hover:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
         [disabled]="ChosenRoom.id === 0"
+        (click)="openModalModifyRoom()"
+      >
+        Modify this Room
+      </button>
+      <button
+        class="px-4 py-2 rounded-lg border border-red-200 hover:border-red-300 transition-all duration-300 text-white bg-red-800 hover:bg-red-900 disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="ChosenRoom.id === 0"
+        (click)="deleteRoom()"
+      >
+        Delete this Room
+      </button>
+      <button
+        class="px-4 py-2 rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 text-white bg-zinc-800 hover:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="ChosenRoom.id === 0"
         (click)="openEvents()"
       >
         Attach an Event
@@ -409,7 +423,7 @@
   class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
 >
   <div
-    class="bg-white rounded-lg w-1/3 p-6 border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-lg relative"
+    class="bg-white bg-red-200 rounded-lg w-1/3 border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-lg relative"
     role="dialog"
     aria-modal="true"
   >
@@ -422,10 +436,8 @@
     </button>
 
     <!-- Modal Content -->
-    <div
-      class="max-w-4xl mx-auto bg-white border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-md rounded p-6"
-    >
-      <h2 class="text-2xl font-bold mb-4">Add New Room</h2>
+    <div class="max-w-4xl mx-auto p-6">
+      <h3 class="text-2xl font-bold mb-4">Add New Room</h3>
       <form>
         <!-- Room Name -->
         <div class="mb-4">
@@ -437,7 +449,7 @@
             id="name"
             name="name"
             [(ngModel)]="newRoom.name"
-            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
             placeholder="Enter room name"
           />
         </div>
@@ -452,7 +464,7 @@
             id="num"
             name="num"
             [(ngModel)]="newRoom.num"
-            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
             placeholder="Enter room number"
           />
         </div>
@@ -469,7 +481,7 @@
             name="description"
             rows="4"
             [(ngModel)]="newRoom.description"
-            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
             placeholder="Enter room description"
           ></textarea>
         </div>
@@ -483,7 +495,7 @@
             id="type"
             name="type"
             [(ngModel)]="newRoom.type"
-            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
           >
             <option value="">Select a type</option>
             <option value="classroom">Classroom</option>
@@ -502,7 +514,7 @@
             id="capacite"
             name="capacite"
             [(ngModel)]="newRoom.capacite"
-            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
             placeholder="Enter room capacity"
           />
         </div>
@@ -517,7 +529,7 @@
             id="img"
             name="img"
             [(ngModel)]="newRoom.img"
-            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm focus:border-zinc-950 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
             placeholder="Enter image URL"
           />
         </div>
@@ -537,6 +549,145 @@
             class="bg-zinc-950 text-white px-4 py-2 rounded hover:bg-zinc-800"
           >
             Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ModalModifyRoom -->
+<div
+  *ngIf="showModalModifyRoom"
+  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+>
+  <div
+    class="bg-white bg-red-200 rounded-lg w-1/3 border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-lg relative"
+    role="dialog"
+    aria-modal="true"
+  >
+    <!-- Close Button -->
+    <button
+      class="absolute top-2 right-2 text-zinc-500 hover:text-zinc-700"
+      (click)="closeModalModifyRoom()"
+    >
+      &times;
+    </button>
+
+    <!-- Modal Content -->
+    <div class="max-w-4xl mx-auto p-6">
+      <h3 class="text-2xl font-bold mb-4">Modify A Room</h3>
+      <form>
+        <!-- Room Name -->
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-zinc-700"
+            >Room Name</label
+          >
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="ChosenRoom.name"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
+            placeholder="Enter room name"
+          />
+        </div>
+
+        <!-- Room Number -->
+        <div class="mb-4">
+          <label for="num" class="block text-sm font-medium text-zinc-700"
+            >Room Number</label
+          >
+          <input
+            type="number"
+            id="num"
+            name="num"
+            [(ngModel)]="ChosenRoom.num"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
+            placeholder="Enter room number"
+          />
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+          <label
+            for="description"
+            class="block text-sm font-medium text-zinc-700"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            [(ngModel)]="ChosenRoom.description"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
+            placeholder="Enter room description"
+          ></textarea>
+        </div>
+
+        <!-- Type -->
+        <div class="mb-4">
+          <label for="type" class="block text-sm font-medium text-zinc-700"
+            >Type</label
+          >
+          <select
+            id="type"
+            name="type"
+            [(ngModel)]="ChosenRoom.type"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
+          >
+            <option value="">Select a type</option>
+            <option value="classroom">Classroom</option>
+            <option value="laboratory">Laboratory</option>
+            <option value="office">Office</option>
+          </select>
+        </div>
+
+        <!-- Capacity -->
+        <div class="mb-4">
+          <label for="capacite" class="block text-sm font-medium text-zinc-700"
+            >Capacity</label
+          >
+          <input
+            type="number"
+            id="capacite"
+            name="capacite"
+            [(ngModel)]="ChosenRoom.capacite"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
+            placeholder="Enter room capacity"
+          />
+        </div>
+
+        <!-- Image URL -->
+        <div class="mb-4">
+          <label for="img" class="block text-sm font-medium text-zinc-700"
+            >Image URL</label
+          >
+          <input
+            type="url"
+            id="img"
+            name="img"
+            [(ngModel)]="ChosenRoom.img"
+            class="mt-1 block w-full rounded-md border border-zinc-200 hover:border-zinc-300 transition-all duration-300 shadow-sm"
+            placeholder="Enter image URL"
+          />
+        </div>
+        <!-- Bloc -->
+        <input type="number" [(ngModel)]="ChosenRoom.bloc_id" name="bloc_id" />
+
+        <!-- Actions -->
+        <div class="flex justify-end">
+          <button
+            class="px-4 py-2 rounded-lg border border-zinc-200 hover:border-zinc-300 transition-all duration-300 text-white bg-zinc-800 hover:bg-zinc-900"
+            (click)="closeModalModifyRoom()"
+          >
+            Close
+          </button>
+          <button
+            (click)="modifyRoom()"
+            class="bg-zinc-950 text-white px-4 py-2 rounded hover:bg-zinc-800"
+          >
+            Modify
           </button>
         </div>
       </form>
