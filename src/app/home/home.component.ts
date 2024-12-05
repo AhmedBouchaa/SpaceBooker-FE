@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent {
   constructor(private authService: AuthService, private router: Router) {}
   isLoggedIn(): boolean {
-    return this.authService.isLoggedIn();
+    return this.authService.isAuthenticated();
   }
 
   navigateToDashboard() {

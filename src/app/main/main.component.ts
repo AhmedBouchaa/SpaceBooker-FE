@@ -25,7 +25,7 @@ import { HomeComponent } from '../home/home.component';
 export class MainComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
   ngOnInit() {
-    if (!this.authService.isLoggedIn()) {
+    if (!this.authService.isAuthenticated()) {
       this.router.navigate([HomeComponent]); // Redirige vers Home si non connecté
     }
   }

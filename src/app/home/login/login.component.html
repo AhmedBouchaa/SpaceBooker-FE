@@ -1,1 +1,52 @@
-<p>login works!</p>
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+  *ngIf="!authService.authenticated"
+>
+  <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px">
+    <h3 class="text-center mb-4">Login</h3>
+
+    <form (ngSubmit)="onLogin()">
+      <!-- Champ Username avec icône -->
+      <div class="form-group mb-3">
+        <label for="username">Username</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-person"></i></span>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            [(ngModel)]="authService.username"
+            name="username"
+            placeholder="Enter username"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Champ Password avec icône -->
+      <div class="form-group mb-3">
+        <label for="password">Password</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            [(ngModel)]="authService.password"
+            name="password"
+            placeholder="Enter password"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </div>
+    </form>
+
+    <div *ngIf="loginError" class="alert alert-danger mt-3" role="alert">
+      {{ loginError }}
+    </div>
+  </div>
+</div>
